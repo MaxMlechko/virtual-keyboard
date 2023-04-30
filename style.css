@@ -1,0 +1,71 @@
+body{
+    font-size: 2vw;
+}
+
+.container{
+    width: 70%;
+    margin: auto;
+}
+
+.text_field{
+    width: 100%;
+}
+
+.virtual_keyboard{
+    display: flex;
+    flex-direction: column;
+    background: #d4d4d4;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.keyboard_row{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.key{
+    background: #a0a0a0;
+    border-radius: 15px;
+    margin: 5px;
+    padding: 10px;
+    height: 2.6vw;
+    min-width: 2.6vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+    box-shadow: 5px 5px 2px 1px
+}
+
+.space{
+    flex-grow: 6;
+}
+
+.first_shift{
+    flex-grow: 2.5;
+}
+
+.second_shift{
+    flex-grow: 0;
+}
+
+.enter_caps{
+    flex-grow: 2;
+}
+
+.tab_backspace{
+    flex-grow: 2;
+}
+
+.button_down{
+    transform: translateX(5px) translateY(5px);
+    box-shadow: none;
+    transition: 0.1s;
+}
+
+@keyframes button_down {
+    0%{box-shadow: 5px 5px 2px 1px}
+    100%{box-shadow: 0px 0px 0px 0px}
+}
