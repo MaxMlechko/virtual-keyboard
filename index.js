@@ -1,6 +1,7 @@
 let container = document.createElement("div")
 let textInput = document.createElement("textarea")
 let virtual_keyboard = document.createElement("div")
+let info = document.createElement("div")
 const list  = [
     ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '&larr;'],
     ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'DEL'],
@@ -10,10 +11,18 @@ const list  = [
 ]
 
 const rus = [
-    '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '&larr;',
+    'ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '&larr;',
     'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'DEL',
     'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж' , `э`, '&crarr;',
     'Shift', 'я' , 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '&#9650;', 'Shift',
+    'Ctrl', 'Win', 'Alt', '__', 'Alt', 'Ctrl', '&#9668;', '&#9660;', '&#9658;'
+]
+
+const shiftRus = [
+    'Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', '&larr;',
+    'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '/', 'DEL',
+    'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж' , `Э`, '&crarr;',
+    'Shift', 'Я' , 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', '&#9650;', 'Shift',
     'Ctrl', 'Win', 'Alt', '__', 'Alt', 'Ctrl', '&#9668;', '&#9660;', '&#9658;'
 ]
 
@@ -33,8 +42,11 @@ const shiftEng = [
     'Ctrl', 'Win', 'Alt', '__', 'Alt', 'Ctrl', '&#9668;', '&#9660;', '&#9658;'
 ]
 
-const letters = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm']
-const shiftKeys = ['~', '!', '@', '#', '$', '%', '^', `&`, '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?']
+const lettersEng = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g',
+                    'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm']
+const lettersRus = ['ё', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', 'ф', 'ы',
+                    'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'я', 'ч', 'с', 'м', 'и', 'т',
+                    'ь', 'б', 'ю']
 let divs = []
 let caps
 let language = 'en'
@@ -167,25 +179,49 @@ function removeButtonAnimation(event){
 }
 
 function changeCase(){
-    if(caps){
-        keys.forEach(elem => {
-            for(let i = 0; i < letters.length; i++){
-                if(elem.innerHTML == letters[i].toUpperCase()){
-                    elem.innerHTML = elem.innerHTML.toLowerCase()
+    if(language == 'en'){
+        if(caps){
+            keys.forEach(elem => {
+                for(let i = 0; i < lettersEng.length; i++){
+                    if(elem.innerHTML == lettersEng[i].toUpperCase()){
+                        elem.innerHTML = elem.innerHTML.toLowerCase()
+                    }
                 }
-            }
-        })
-        caps = false
+            })
+            caps = false
+        }
+        else{
+            keys.forEach(elem => {
+                for(let i =0; i < lettersEng.length; i++){
+                    if(elem.innerHTML == lettersEng[i]){
+                        elem.innerHTML = elem.innerHTML.toUpperCase()
+                    }
+                }
+            })
+            caps = true
+        }
     }
     else{
-        keys.forEach(elem => {
-            for(let i =0; i < letters.length; i++){
-                if(elem.innerHTML == letters[i]){
-                    elem.innerHTML = elem.innerHTML.toUpperCase()
+        if(caps){
+            keys.forEach(elem => {
+                for(let i = 0; i < lettersRus.length; i++){
+                    if(elem.innerHTML == lettersRus[i].toUpperCase()){
+                        elem.innerHTML = elem.innerHTML.toLowerCase()
+                    }
                 }
-            }
-        })
-        caps = true
+            })
+            caps = false
+        }
+        else{
+            keys.forEach(elem => {
+                for(let i =0; i < lettersRus.length; i++){
+                    if(elem.innerHTML == lettersRus[i]){
+                        elem.innerHTML = elem.innerHTML.toUpperCase()
+                    }
+                }
+            })
+            caps = true
+        }
     }
 }
 
@@ -239,14 +275,28 @@ function inputCharacter(key){
 }
 
 function changeShiftKeys(){
-    if(keys[1].innerHTML == '1'){
-        for(let i = 0; i < keys.length; i++){
-            keys[i].innerHTML = shiftEng[i]
+    if(language == 'en'){
+        if(keys[1].innerHTML == '1'){
+            for(let i = 0; i < keys.length; i++){
+                keys[i].innerHTML = shiftEng[i]
+            }
+        }
+        else{
+            for(let i = 0; i < keys.length; i++){
+                keys[i].innerHTML = eng[i]
+            }
         }
     }
     else{
-        for(let i = 0; i < keys.length; i++){
-            keys[i].innerHTML = eng[i]
+        if(keys[1].innerHTML == '1'){
+            for(let i = 0; i < keys.length; i++){
+                keys[i].innerHTML = shiftRus[i]
+            }
+        }
+        else{
+            for(let i = 0; i < keys.length; i++){
+                keys[i].innerHTML = rus[i]
+            }
         }
     }
 }
@@ -339,6 +389,8 @@ textInput.className = 'text_field'
 virtual_keyboard.className = 'virtual_keyboard'
 textInput.setAttribute("rows", "10")
 textInput.setAttribute("autofocus", "autofocus")
+info.innerHTML = 'alt + shift = change language'
+container.appendChild(info)
 container.appendChild(textInput)
 container.appendChild(virtual_keyboard)
 document.querySelector("body").appendChild(container)
