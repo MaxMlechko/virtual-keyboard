@@ -1,17 +1,43 @@
 let container = document.createElement("div")
 let textInput = document.createElement("textarea")
 let virtual_keyboard = document.createElement("div")
-const list  =[
+const list  = [
     ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '&larr;'],
     ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'DEL'],
     ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';' , `'`, '&crarr;'],
     ['Shift', 'z' , 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '&#9650;', 'Shift'],
     ['Ctrl', 'Win', 'Alt', '__', 'Alt', 'Ctrl', '&#9668;', '&#9660;', '&#9658;']
 ]
+
+const rus = [
+    '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '&larr;',
+    'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'DEL',
+    'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж' , `э`, '&crarr;',
+    'Shift', 'я' , 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '&#9650;', 'Shift',
+    'Ctrl', 'Win', 'Alt', '__', 'Alt', 'Ctrl', '&#9668;', '&#9660;', '&#9658;'
+]
+
+const eng = [
+    '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '&larr;',
+    'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'DEL',
+    'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';' , `'`, '&crarr;',
+    'Shift', 'z' , 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '&#9650;', 'Shift',
+    'Ctrl', 'Win', 'Alt', '__', 'Alt', 'Ctrl', '&#9668;', '&#9660;', '&#9658;'
+]
+
+const shiftEng = [
+    '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '&larr;',
+    'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|', 'DEL',
+    'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':' , `"`, '&crarr;',
+    'Shift', 'Z' , 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '&#9650;', 'Shift',
+    'Ctrl', 'Win', 'Alt', '__', 'Alt', 'Ctrl', '&#9668;', '&#9660;', '&#9658;'
+]
+
 const letters = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm']
 const shiftKeys = ['~', '!', '@', '#', '$', '%', '^', `&`, '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?']
 let divs = []
 let caps
+let language = 'en'
 
 function creatingDiv(arr){
     let div_row = []
@@ -214,31 +240,13 @@ function inputCharacter(key){
 
 function changeShiftKeys(){
     if(keys[1].innerHTML == '1'){
-        for(let i = 0; i < 13; i++){
-            keys[i].innerHTML = shiftKeys[i]
-        }
-        for(let i = 13; i < 16; i++){
-            keys[12 + i].innerHTML = shiftKeys[i]
-        }
-        for(let i = 16; i < 18; i++){
-            keys[23 + i].innerHTML = shiftKeys[i]
-        }
-        for(let i = 18; i < 21; i++){
-            keys[32 + i].innerHTML = shiftKeys[i]
+        for(let i = 0; i < keys.length; i++){
+            keys[i].innerHTML = shiftEng[i]
         }
     }
     else{
-        for(let i = 0; i < 13; i++){
-            keys[i].innerHTML = list[0][i]
-        }
-        for(let i = 11; i < 14; i++){
-            keys[14 + i].innerHTML = list[1][i]
-        }
-        for(let i = 10; i < 12; i++){
-            keys[29 + i].innerHTML = list[2][i]
-        }
-        for(let i = 8; i < 11; i++){
-            keys[42 + i].innerHTML = list[3][i]
+        for(let i = 0; i < keys.length; i++){
+            keys[i].innerHTML = eng[i]
         }
     }
 }
@@ -313,6 +321,19 @@ function removeKeyAnimation(elem){
     }
 }
 
+function changeLanguage(lang){
+    if(lang == 'ru'){
+        for(let i = 0; i < keys.length; i++){
+            keys[i].innerHTML = rus[i]
+        }
+    }
+    else{
+        for(let i = 0; i < keys.length; i++){
+            keys[i].innerHTML = eng[i]
+        }
+    }
+}
+
 container.className = 'container'
 textInput.className = 'text_field'
 virtual_keyboard.className = 'virtual_keyboard'
@@ -331,6 +352,12 @@ document.addEventListener('keydown', function(elem){addKeyAnimation(elem)})
 document.addEventListener('keyup', function(elem) {removeKeyAnimation(elem)})
 document.addEventListener('keydown', function(event) {
     if (event.key == 'Shift' && event.altKey) {
-      alert('menyaem')
+        if(language == 'en'){
+            language = 'ru'
+        }
+        else{
+            language = 'en'
+        }
+        changeLanguage(language)
     }
   })
