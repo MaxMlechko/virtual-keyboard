@@ -261,6 +261,22 @@ function addKeyAnimation(elem){
             document.getElementById(`${elem.key}`).classList.add('button_down')
             break
 
+        case 'Tab':
+            textInput.value += '    '
+            document.getElementById(`${elem.key}`).classList.add('button_down')
+            break
+        
+        case 'Enter':
+        case 'Backspace':
+        case 'Delete':
+        case 'Meta':
+        case 'ArrowUp':
+        case 'ArrowDown':
+        case 'ArrowLeft':
+        case 'ArrowRight':
+            document.getElementById(`${elem.key}`).classList.add('button_down')
+            break
+
         default:
             document.getElementById(`${elem.key.toLowerCase()}`).classList.add('button_down')
     }
@@ -277,6 +293,18 @@ function removeKeyAnimation(elem){
             break
 
         case "CapsLock":
+            document.getElementById(`${elem.key}`).classList.remove('button_down')
+            break
+
+        case 'Tab':
+        case 'Enter':
+        case 'Backspace':
+        case 'Delete':
+        case 'Meta':
+        case 'ArrowUp':
+        case 'ArrowDown':
+        case 'ArrowLeft':
+        case 'ArrowRight':
             document.getElementById(`${elem.key}`).classList.remove('button_down')
             break
 
@@ -301,3 +329,8 @@ keys.forEach(elem => elem.addEventListener("mouseup", removeButtonAnimation))
 keys.forEach(elem => elem.addEventListener("click", inputCharacter))
 document.addEventListener('keydown', function(elem){addKeyAnimation(elem)})
 document.addEventListener('keyup', function(elem) {removeKeyAnimation(elem)})
+document.addEventListener('keydown', function(event) {
+    if (event.key == 'Shift' && event.altKey) {
+      alert('menyaem')
+    }
+  })
