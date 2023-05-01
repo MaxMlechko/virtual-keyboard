@@ -9,6 +9,7 @@ body{
 
 .text_field{
     width: 100%;
+    font-size: 24px;
 }
 
 .virtual_keyboard{
@@ -36,7 +37,12 @@ body{
     align-items: center;
     flex-grow: 1;
     flex-shrink: 1;
-    box-shadow: 5px 5px 2px 1px
+    box-shadow: 5px 5px 2px 1px;
+}
+
+.key::selection{
+    color: black;
+    background-color: transparent;
 }
 
 .space{
@@ -51,11 +57,11 @@ body{
     flex-grow: 0;
 }
 
-.enter_caps{
+.enter, .caps{
     flex-grow: 2;
 }
 
-.tab_backspace{
+.tab, .backspace{
     flex-grow: 2;
 }
 
